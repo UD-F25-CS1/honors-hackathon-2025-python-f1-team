@@ -1,3 +1,4 @@
+
 #Imports
 from bakery import assert_equal
 import matplotlib.pyplot as plt
@@ -5,11 +6,13 @@ from drafter import *
 from dataclasses import dataclass
 import random
 
+
 #Dataclasses
 @dataclass
 class Share:
     purchase_price: float
     num_shares: float
+
 
 @dataclass
 class Stock:
@@ -20,6 +23,7 @@ class Stock:
     shares: list[Share]
     stock_history: list[float]
 
+
 @dataclass
 class State:
     username: str
@@ -28,9 +32,12 @@ class State:
     cash: float
     event_status: str
 
+
 #CONSTANTS
 
+
 STARTING_WALLET = 1000.0
+
 
 #Stocks
 # 1. Technology / AI (High Price, High Volatility)
@@ -43,6 +50,7 @@ tech_stock = Stock(
     stock_history=[230.10, 235.00, 240.50, 238.20, 245.50]
 )
 
+
 # 2. Renewable Energy (Medium Price, Steady Growth)
 energy_stock = Stock(
     symbol="SOLA",
@@ -52,6 +60,7 @@ energy_stock = Stock(
     shares=[],
     stock_history=[42.00, 42.50, 43.10, 44.00, 45.75]
 )
+
 
 # 3. Consumer Goods / Food (Low Price, Stable)
 food_stock = Stock(
@@ -63,6 +72,7 @@ food_stock = Stock(
     stock_history=[12.10, 12.15, 12.20, 12.25, 12.30]
 )
 
+
 # 4. Defense
 defense_stock = Stock(
     symbol="ADCX",
@@ -72,6 +82,7 @@ defense_stock = Stock(
     shares=[],
     stock_history=[142.30, 145.10, 147.85, 150.60, 149.20]
 )
+
 
 # 5. Automotive
 automotive_stock = Stock(
@@ -83,7 +94,9 @@ automotive_stock = Stock(
     stock_history=[62.40, 63.75, 65.10, 64.55, 66.20]
 )
 
+
 STOCKS = [tech_stock, energy_stock, food_stock, defense_stock, automotive_stock]
+
 
 #Images
 trading_floor_image = "trading_floor.png"
@@ -95,6 +108,8 @@ solaris_image = "solaris.png"
 crunchy_image = "crunchy.png"
 aegis_image = "aegis.png"
 voltara_image = "voltara.png"
+home_image = "home.png"
+
 
 #Helper Functions
 def calculate_portfolio_value(portfolio: list[Stock]) -> float:
@@ -105,8 +120,11 @@ def calculate_portfolio_value(portfolio: list[Stock]) -> float:
     return total
 
 
+
+
 #Routes
 set_website_style("tacit")
+
 
 @route
 def index(state: State) -> Page:
@@ -125,13 +143,17 @@ def index(state: State) -> Page:
         return Page(state,
         [
             Header("Welcome to Stonks: The Stock Market Game!"),
+            Image(home_image, 768, 432),
             f"Cash Available: ${state.cash}",
             f"Portfolo Value: ${calculate_portfolio_value(state.portfolio)}",
+            state.event_status,
             MatPlotLibPlot(),
             Button("Trade", "trading_floor"),
             Button("New Day", new_day),
             Button("Event", event),
         ])
+
+
 
 
 @route
@@ -147,6 +169,7 @@ def trading_floor(state: State) -> Page:
         Button("Back to Main", index)
     ])
 
+
 @route
 def view_neuro(state: State) -> Page:
     plt.plot(state.portfolio[0].stock_history)
@@ -158,7 +181,7 @@ def view_neuro(state: State) -> Page:
         Buttons.append(Button("Share Quantity: " + str(share.num_shares) + " | Purchase Price: $" + str(share.purchase_price), sell, [Argument("stock_id", 0), Argument("share_index", i)]))
     return Page(state,[
         Header("NeuroLink Systems (NEURO)"),
-        
+        Image(nuerolink_image, 768, 432),
         state.portfolio[0].description,
         "Current Price: $" + str(state.portfolio[0].price),
         MatPlotLibPlot(),
@@ -171,6 +194,7 @@ def view_neuro(state: State) -> Page:
         Button("Home", index)
     ])
 
+
 @route
 def view_sola(state: State) -> Page:
     plt.plot(state.portfolio[1].stock_history)
@@ -182,6 +206,7 @@ def view_sola(state: State) -> Page:
         Buttons.append(Button("Share Quantity: " + str(share.num_shares) + " | Purchase Price: $" + str(share.purchase_price), sell, [Argument("stock_id", 1), Argument("share_index", i)]))
     return Page(state,[
         Header("Solaris Dynamics (SOLA)"),
+        Image(solaris_image, 768, 432),
         state.portfolio[1].description,
         "Current Price: $" + str(state.portfolio[1].price),
         MatPlotLibPlot(),
@@ -194,6 +219,7 @@ def view_sola(state: State) -> Page:
         Button("Home", index)
     ])
 
+
 @route
 def view_crunch(state: State) -> Page:
     plt.plot(state.portfolio[2].stock_history)
@@ -205,6 +231,7 @@ def view_crunch(state: State) -> Page:
         Buttons.append(Button("Share Quantity: " + str(share.num_shares) + " | Purchase Price: $" + str(share.purchase_price), sell, [Argument("stock_id", 2), Argument("share_index", i)]))
     return Page(state,[
         Header("Crunchy Corp (CRUNCH)"),
+        Image(crunchy_image, 768, 432),
         state.portfolio[2].description,
         "Current Price: $" + str(state.portfolio[2].price),
         MatPlotLibPlot(),
@@ -217,6 +244,7 @@ def view_crunch(state: State) -> Page:
         Button("Home", index)
     ])
 
+
 @route
 def view_agcx(state: State) -> Page:
     plt.plot(state.portfolio[3].stock_history)
@@ -228,6 +256,7 @@ def view_agcx(state: State) -> Page:
         Buttons.append(Button("Share Quantity: " + str(share.num_shares) + " | Purchase Price: $" + str(share.purchase_price), sell, [Argument("stock_id", 3), Argument("share_index", i)]))
     return Page(state,[
         Header("Aegis Defense Corporation (AGCX)"),
+        Image(Aegis_image, 768, 432),
         state.portfolio[3].description,
         "Current Price: $" + str(state.portfolio[3].price),
         MatPlotLibPlot(),
@@ -240,6 +269,7 @@ def view_agcx(state: State) -> Page:
         Button("Home", index)
     ])
 
+
 @route
 def view_vltm(state: State) -> Page:
     plt.plot(state.portfolio[4].stock_history)
@@ -251,6 +281,7 @@ def view_vltm(state: State) -> Page:
         Buttons.append(Button("Share Quantity: " + str(share.num_shares) + " | Purchase Price: $" + str(share.purchase_price), sell, [Argument("stock_id", 4), Argument("share_index", i)]))
     return Page(state,[
         Header("Voltara Motors (VLTM)"),
+        Image(voltara_image, 768, 432),
         state.portfolio[4].description,
         "Current Price: $" + str(state.portfolio[4].price),
         MatPlotLibPlot(),
@@ -264,12 +295,14 @@ def view_vltm(state: State) -> Page:
     ])
 
 
+
+
 @route
 def buy(state: State, stock_id: int, share_quantity: float) -> Page:
     if (stock_id == 0):
         if share_quantity*state.portfolio[stock_id].price > state.cash:
             return Page(state, [
-                Image("failed_transaction_image", 768, 432),
+                Image(failed_transaction_image, 768, 432),
                 "Oops! Invalid transaction! You do not have enough funds to buy " + str(share_quantity) + " of " + state.portfolio[stock_id].name,
                 Button("Return to " + state.portfolio[stock_id].symbol, view_neuro),
                 Button("Trade", trading_floor),
@@ -345,7 +378,7 @@ def buy(state: State, stock_id: int, share_quantity: float) -> Page:
     elif (stock_id == 4):
         if share_quantity*state.portfolio[stock_id].price > state.cash:
             return Page(state, [
-                Image(failed_transaction_image, 768, 432),   
+                Image(failed_transaction_image, 768, 432),  
                 Header("Oops! Invalid transaction! You do not have enough funds to buy " + str(share_quantity) + " of " + state.portfolio[stock_id].name),
                 Button("Return to " + state.portfolio[stock_id].symbol, view_vltm),
                 Button("Trade", trading_floor),
@@ -364,7 +397,8 @@ def buy(state: State, stock_id: int, share_quantity: float) -> Page:
     else:
         print("wrong id")
 
-@route 
+
+@route
 def sell(state: State, stock_id: int, share_index: int, share_quantity: str) -> Page:
     sold_shares = state.portfolio[stock_id].shares[share_index].num_shares
     if (stock_id == 0):
@@ -419,7 +453,7 @@ def sell(state: State, stock_id: int, share_index: int, share_quantity: str) -> 
         ])
     else:
         print("wrong stock_id")
-    
+   
 @route
 def new_day(state: State) -> Page:
     state.portfolio_history.append(calculate_portfolio_value(state.portfolio))
@@ -427,23 +461,29 @@ def new_day(state: State) -> Page:
     state.portfolio[0].price = state.portfolio[0].price * increment
     state.portfolio[0].stock_history.append(state.portfolio[0].price)
 
+
     increment = random.randint(-5, +5) / 100 + 1.0
     state.portfolio[1].price = state.portfolio[1].price * increment
     state.portfolio[1].stock_history.append(state.portfolio[1].price)
+
 
     increment = random.randint(-5, +5) / 100 + 1.0
     state.portfolio[2].price = state.portfolio[2].price * increment
     state.portfolio[2].stock_history.append(state.portfolio[2].price)
 
+
     increment = random.randint(-8, +10) / 100 + 1.0
     state.portfolio[3].price = state.portfolio[3].price * increment
     state.portfolio[3].stock_history.append(state.portfolio[3].price)
+
 
     increment = random.randint(-8, +5) / 100 + 1.0
     state.portfolio[4].price = state.portfolio[4].price * increment
     state.portfolio[4].stock_history.append(state.portfolio[4].price)
 
+
     return index(state)
+
 
 @route
 def event(state: State) -> Page:
@@ -453,14 +493,17 @@ def event(state: State) -> Page:
         increment = 0.75
         for stock in state.portfolio:
             stock.price = stock.price * increment
+        state.portfolio_history.append(calculate_portfolio_value(state.portfolio))
         state.event_status = "Global Health Agencies Race to Contain Rapidly Spreading Aurelia Virus After First International Cases Reported."
-            
+           
     #interest rate cuts
     elif(rand == 2):
         increment = 1.1
         for stock in state.portfolio:
             stock.price = stock.price * increment
+        state.portfolio_history.append(calculate_portfolio_value(state.portfolio))
         state.event_status = "Federal Reserve Announces Surprise Interest Rate Cuts Amid Signs of Slowing Economic Growth."
+
 
     #cyberwar
     elif(rand == 3):
@@ -469,7 +512,9 @@ def event(state: State) -> Page:
         state.portfolio[2].price*0.8
         state.portfolio[3].price*1.18
         state.portfolio[4].price*0.78
+        state.portfolio_history.append(calculate_portfolio_value(state.portfolio))
         state.event_status = "Major Nations Clash in Global Cyber Standoff as Coordinated Attacks Hit Banking, Energy, and Telecom Networks."
+
 
     #conflict near strait of hormuz
     elif(rand == 4):
@@ -478,14 +523,20 @@ def event(state: State) -> Page:
         state.portfolio[2].price*0.73
         state.portfolio[3].price*1.27
         state.portfolio[4].price*0.67
+        state.portfolio_history.append(calculate_portfolio_value(state.portfolio))
         state.event_status = "Tensions Erupt at Strait of Hormuz as Naval Clash Disrupts Global Oil Shipping Routes."
-    
+   
     #major economic agreement between U.S and China
     elif(rand == 5):
         increment = 1.25
         for stock in state.portfolio:
             stock.price = stock.price * increment
+        state.portfolio_history.append(calculate_portfolio_value(state.portfolio))
         state.event_status = "U.S. and China Sign Landmark Economic Pact Aimed at Lowering Tariffs and Stabilizing Global Trade."
     return index(state)
 
+
 start_server(State("", STOCKS,[0,0] ,STARTING_WALLET, ""))
+
+
+
