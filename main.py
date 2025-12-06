@@ -152,7 +152,7 @@ def index(state: State) -> Page:
             Header("Welcome to Stonks: The Stock Market Game!"),
             Image(home_image, 768, 432),
             f"Cash Available: ${state.cash}",
-            f"Portfolo Value: ${calculate_portfolio_value(state.portfolio)}",
+            f"Portfolio Value: ${calculate_portfolio_value(state.portfolio)}",
             state.event_status,
             MatPlotLibPlot(),
             Button("Trade", "trading_floor"),
@@ -171,7 +171,7 @@ def trading_floor(state: State) -> Page:
         Button("NeuroLink Systems", view_neuro),
         Button("Solaris Dynamics", view_sola),
         Button("Crunchy Corp", view_crunch),
-        Button("VAegis Defense Corporation", view_agcx),
+        Button("Aegis Defense Corporation", view_agcx),
         Button("Voltara Motors", view_vltm),
         Button("Back to Main", index)
     ])
