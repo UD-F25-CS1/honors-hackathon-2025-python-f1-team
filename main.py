@@ -535,6 +535,13 @@ def event(state: State) -> Page:
         state.event_status = "U.S. and China Sign Landmark Economic Pact Aimed at Lowering Tariffs and Stabilizing Global Trade."
     return index(state)
 
+set_site_information(
+    author="ashwinbm@udel.edu and danieleo@udel.edu",
+    description="""Stonks the trading game""",
+    sources=["Official Drafter Documentation only, Gemini"],
+    planning=[""],
+    links=[""]
+)
 
 start_server(State("", STOCKS,[0,0] ,STARTING_WALLET, ""))
 
