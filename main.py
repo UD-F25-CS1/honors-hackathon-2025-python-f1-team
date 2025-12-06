@@ -263,7 +263,7 @@ def view_agcx(state: State) -> Page:
         Buttons.append(Button("Share Quantity: " + str(share.num_shares) + " | Purchase Price: $" + str(share.purchase_price), sell, [Argument("stock_id", 3), Argument("share_index", i)]))
     return Page(state,[
         Header("Aegis Defense Corporation (AGCX)"),
-        Image(Aegis_image, 768, 432),
+        Image(aegis_image, 768, 432),
         state.portfolio[3].description,
         "Current Price: $" + str(state.portfolio[3].price),
         MatPlotLibPlot(),
